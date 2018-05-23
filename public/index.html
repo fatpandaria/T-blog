@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>个人主页</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/base.css">
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- <script src="/public/assests/artTemplate/template-native.js"></script> -->
+    <script src="/node_modules/art-template/lib/template-web.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/public/js/index.js"></script>
+  </head>
+   <body>
+      <script>
+          $.ajax({
+            xhrFields:{
+              withCredentials: true
+            },
+            type: 'get',
+            url: 'http://127.0.0.1:5000/signin',
+            async: false,
+            success (data) {
+              console.log(data)
+              if (!data.isLogin) location.href = '/public/login.html'
+            }
+          })
+          </script>
+
+     <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">大鱼号</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/category">文章 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/album">相册</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/create">发表</a>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    更多
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/public/login.html">登录</a>
+                    <a class="dropdown-item" href="javascript:;" id="signout">注销</a>
+                    <a class="dropdown-item" href="/public/signup.html">注册</a>
+                  </div>
+                </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+          </form>
+        </div>
+    </nav>
+    <!-- 内容盒子 -->
+    <div class="container ">
+        <div class="row pt-5 ">
+          <div class="col-7 float-left latestPostsBox">
+            <!-- insert here -->
+          </div>
+
+            <div class="col-4 float-right">
+                <div class="border-primary profileBox">
+                  
+                </div>
+
+                <div class="commentsBox">
+                  
+                </div>
+
+                <div>
+                  <h5>友情链接</h5>
+                  <hr>
+                  <ul>
+                    <li><a href="">友情链接</a></li>
+                    <li><a href="">友情链接</a></li>
+                    <li><a href="">友情链接</a></li>
+                    <li><a href="">友情链接</a></li>
+                    <li><a href="">友情链接</a></li>
+                    <li><a href="">友情链接</a></li>
+                  </ul>
+                </div>
+              </div>
+          </div>
+      
+    </div>
+
+    <!-- 底部 -->
+    <footer class="mb-3 text-center footerBox" >
+       
+    </footer>
+
+    <script type="text/template" id="footerTmp">
+      <hr>
+      From 2017 To <%=time%> <span><a href="">联系我</a></span> <span> | </span> <span> <a href="">微博</a> </span>
+      <span> | </span> <span><a href="">GitHub</a></span>
+    </script>
+
+    <script id="latestPostTmp" type="text/template">
+      <h3 class="col-12 ">最近的文章</h3>
+            <% for(let i=0;i<7;i++){ %>
+              <div class="col-12 mb-2">
+                <h2 class="text-center text-secondary"><a href="">标题</a></h2>
+                <h5 ><span>分类:</span><span><%=i%></span></h4>
+                <div class="fa-ellipsis-h text-secondary">
+                  文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略
+                  文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略
+                </div>
+                <div class="mt-2 text-success clearfix">
+                  <span class="float-left">发表于：2018-5-19 16:09</span> <span class="float-right"><span>浏览(<%=1%>)</span><span>留言(<%=2%>)</span></span>
+                </div>
+              </div>
+            <% } %>
+    </script>
+
+    <script id="profileTmp" type="text/template">
+      <h4>关于</h4>
+      <!-- <img src="" alt=""> -->
+      <p><a href="">*个人简历</a></p>
+      <p>留言数：1</p>
+      <p>浏览数：2</p>
+      <hr>
+    </script>
+    <script id="commentsTmp" type="text/template">
+      <h4>最近的留言</h4>
+      <%for(let i=0;i<7;i++){ %>
+        <div>
+          <h6>留言人：</h6><span>
+            他blalba 他blalba 他blalba 他blalba 他blalba 他blalba 他blalba
+            他blalba 他blalba 他blalba
+          </span>
+        </div>
+        <hr>
+        <%}%>
+    </script>
+   </body>
+</html>
