@@ -1,4 +1,5 @@
 module.exports = (app) => {
+  app.use('/checkLogin', require('./checkLogin'))
   app.use('/signup', require('./signup'))
   app.use('/signin', require('./signin'))
   app.use('/signout', require('./signout'))

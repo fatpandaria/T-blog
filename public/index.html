@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>个人主页</title>
+    <link rel="stylesheet" href="/public/css/index.css">
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/base.css">
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -18,7 +19,7 @@
               withCredentials: true
             },
             type: 'get',
-            url: 'http://127.0.0.1:5000/signin',
+            url: 'http://127.0.0.1:5000/checkLogin',
             async: false,
             success (data) {
               console.log(data)
@@ -42,7 +43,7 @@
               <a class="nav-link" href="/album">相册</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/create">发表</a>
+                <a class="nav-link" href="/public/post.html">发表</a>
               </li>
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,7 +71,16 @@
 
             <div class="col-4 float-right">
                 <div class="border-primary profileBox">
-                  
+                <h4>关于</h4>
+                
+                <div id="avatarBox" style="height: 50px;width: 50px;border-radius: 50%">
+                   
+                </div>
+
+                <p><a href="">*个人简历</a></p>
+                <p id="totalComments"></p>
+                <p id="totalView"></p>
+                <hr>
                 </div>
 
                 <div class="commentsBox">
@@ -91,9 +101,20 @@
                 </div>
               </div>
           </div>
-      
+
+          <!-- 分页 -->
+          <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item "><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+            </nav>
     </div>
 
+    
     <!-- 底部 -->
     <footer class="mb-3 text-center footerBox" >
        
@@ -105,39 +126,46 @@
       <span> | </span> <span><a href="">GitHub</a></span>
     </script>
 
+    <script type="text/template" id="avatarTmp">
+
+     <img src="/public/img/<%=%>.jpg" alt="" style="height: 100%;width: 50%;">
+
+    </script>
+
     <script id="latestPostTmp" type="text/template">
       <h3 class="col-12 ">最近的文章</h3>
-            <% for(let i=0;i<7;i++){ %>
-              <div class="col-12 mb-2">
-                <h2 class="text-center text-secondary"><a href="">标题</a></h2>
-                <h5 ><span>分类:</span><span><%=i%></span></h4>
-                <div class="fa-ellipsis-h text-secondary">
-                  文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略
-                  文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略文章内容超出省略
-                </div>
+            <% for(let i=0;i<result.length;i++){ %>
+              <div class="col-12 mb-2 postContent ">
+                <h5 class="text-center text-secondary"><a href="/public/article.html?postId=<%=result[i].postId%>"><%=result[i].title%></a></h5>
+                <h5 ><span>分类:</span><span><%=i%></span></h5>
                 <div class="mt-2 text-success clearfix">
-                  <span class="float-left">发表于：2018-5-19 16:09</span> <span class="float-right"><span>浏览(<%=1%>)</span><span>留言(<%=2%>)</span></span>
+                    <span class="float-left">发表于：<%=result[i].pub_time%></span> <span class="float-right"><span>浏览(<%=result[i].view_num%>)</span><span>留言(<%=result[i].cmt_num%>)</span></span>
+                  </div>
+                <div class="fa-ellipsis-h text-secondary">
+                  <%=result[i].content%>
                 </div>
+                
               </div>
             <% } %>
     </script>
 
-    <script id="profileTmp" type="text/template">
-      <h4>关于</h4>
-      <!-- <img src="" alt=""> -->
-      <p><a href="">*个人简历</a></p>
-      <p>留言数：1</p>
-      <p>浏览数：2</p>
-      <hr>
+    <script id="cmtNumTmp" type="text/template">
+      <span> 留言数：<%=result.length%> </span>
     </script>
+
+    <script id="viewNumTmp" type="text/template">
+      <span>浏览数：<%=count%></span>
+    </script>
+
     <script id="commentsTmp" type="text/template">
       <h4>最近的留言</h4>
-      <%for(let i=0;i<7;i++){ %>
+      <%for(let i=0;i<(result.length>10?10:result.length);i++){ %>
         <div>
-          <h6>留言人：</h6><span>
-            他blalba 他blalba 他blalba 他blalba 他blalba 他blalba 他blalba
-            他blalba 他blalba 他blalba
+          <h6> <%=result[i].userId%>：</h6>
+          <span>
+          <%=result[i].comment%>
           </span>
+          <a href="/public/article.html?postId=<%=result[i].p_Id%>">前往该文章</a>
         </div>
         <hr>
         <%}%>

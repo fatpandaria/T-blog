@@ -1,22 +1,18 @@
-module.exports = (req, res) => {
-  if (!req.session.author) {
-    return {
-      stateCode: 0,
-      message: '用户未登录'
+module.exports = {
+  isNotLogin (req, res, next) {
+    if (!req.session.author) {
+      return res.json(
+        {err_code: 0, message: '未登录', isLogin: false}
+      )
     }
-  } else {
-    return {
-      stateCode: 1,
-      message: '用户已登录'
+    next()
+  },
+  isLogin (req, res, next) {
+    if (req.session.author) {
+      return res.json(
+        {err_code: 0, message: '已登录', isLogin: true}
+      )
     }
+    next()
   }
-  // checkNotLogin (req, res, next) {
-  //   if (req.session.user) {
-  //     return {
-  //       stateCode: 0,
-  //       message: '用户未登录'
-  //     }
-  //   }
-  //   next()
-  // }
 }

@@ -17,20 +17,57 @@ $(() => {
   //     console.log('ready');
   //   }
   // })
-  // $.ajax({
-  //   url: 'http://127.0.0.1:5000/posts',
-  //   type: 'GET',
-  //   success (data) {
-  //     console.log(data)
-  //   }
-  // })
-  // $.ajax({
-  //   url: 'http://127.0.0.1:5000/comments',
-  //   type: 'GET',
-  //   success (data) {
-  //     console.log(data)
-  //   }
-  // })
+  
+  $.ajax({
+    xhrFields: {
+      withCredentials: true
+    },
+    url: 'http://127.0.0.1:5000/posts',
+    type: 'GET',
+    async: false,
+    success (data) {
+      let count = 0
+      data.forEach((value) => {
+        count += value.view_num
+      })
+      console.log(data)
+      let latestPostTmp = template('latestPostTmp', {result:data}) 
+      $('.latestPostsBox').html(latestPostTmp)
+
+
+      let viewNumTmp = template('viewNumTmp', {count:count}) 
+      $('#totalView').html(viewNumTmp)
+
+    }
+  })
+
+  $.ajax({
+    xhrFields: {
+      withCredentials: true
+    },
+    url: 'http://127.0.0.1:5000/posts',
+    type: 'GET',
+    async: false,
+    success (data) {
+      let count = 0
+      data.forEach((value) => {
+        count += value.view_num
+      })      
+    }
+  })
+
+  $.ajax({
+    url: 'http://127.0.0.1:5000/comments',
+    type: 'GET',
+    success (data) {
+      console.log(data.message)
+      let commentsTmp = template('commentsTmp', {result:data.message})
+    $('.commentsBox').html(commentsTmp)
+
+    let cmtNumTmp = template('cmtNumTmp', {result:data.message}) 
+    $('#totalComments').html(cmtNumTmp)
+    }
+  })
 
   $('#signout').on('click', () => {
     $.ajax({
@@ -44,17 +81,12 @@ $(() => {
       }
     })
   })
-  let footerTMP = template('footerTmp', { // 这里的名字虽然时id，但是不要写#
+
+  let footerTMP = template('footerTmp', { // 这里的名字虽然是id，但是不要写#
     time: (new Date()).getFullYear()
   }) 
   $('.footerBox').html(footerTMP)
 
-  let latestPostTmp = template('latestPostTmp', {}) 
-  $('.latestPostsBox').html(latestPostTmp)
 
-  let profileTmp = template('profileTmp', {}) 
-  $('.profileBox').html(profileTmp)
 
-  let commentsTmp = template('commentsTmp', {})
-    $('.commentsBox').html(commentsTmp)
 })

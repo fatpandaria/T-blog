@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <!-- <script src="/public/assests/artTemplate/template-native.js"></script> -->
+  <script src="/node_modules/art-template/lib/template-web.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/public/js/post.js"></script>
+  <title>Document</title>
+  <style>
+  .formstyle{
+    display: block;
+    height: 500px;
+    width: 800px;
+    margin: 0 auto;
+  }
+  [name=content]{
+    display: block;
+    width: 700px;
+    height: 300px;
+  }
+  [name=title]{
+    display: block;
+    width: 500px;
+    height: 30px;
+  }
+  </style>
+</head>
+<body>
+    <script>
+      $.ajax({
+        xhrFields:{
+                withCredentials: true
+              },
+        type: 'get',
+        url: 'http://127.0.0.1:5000/checkLogin',
+        async: false,
+        success (data) {
+          console.log(data)
+          if (!data.isLogin) location.href = '/public/login.html'
+        }
+      })
+    </script>
+
+
+  <form action="" id="publishForm" class="formstyle">
+    title:  <textarea type="text" name="title" cols="30" rows="1"></textarea><br>
+    content: <textarea name="content" id="" cols="30" rows="10"></textarea> <br>
+    <input type="button" value="发表" id="publishBtn">
+  </form>
+ 
+</body>
+</html>

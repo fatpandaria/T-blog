@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/public/css/base.css">
+  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <!-- <script src="/public/assests/artTemplate/template-native.js"></script> -->
+  <script src="/node_modules/art-template/lib/template-web.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/public/js/article.js"></script>
+  <title>Document</title>
+  <style>
+  .formstyle{
+    display: block;
+    height: 500px;
+    width: 800px;
+    margin: 0 auto;
+  }
+  [name=content]{
+    display: block;
+    width: 700px;
+    height: 300px;
+  }
+  [name=title]{
+    display: block;
+    width: 500px;
+    height: 30px;
+  }
+  </style>
+</head>
+<body>
+    <script>
+      $.ajax({
+        xhrFields:{
+                withCredentials: true
+              },
+        type: 'get',
+        url: 'http://127.0.0.1:5000/checkLogin',
+        async: false,
+        success (data) {
+          console.log(data)
+          if (!data.isLogin) location.href = '/public/login.html'
+        }
+      })
+
+      $.ajax({
+        
+        
+
+      })
+    </script>
+
+<div class="container">
+  <h2><a href="/public/index.html">首页</a></h2>
+  <div class="row" >
+    <div class="col-10 float-left" id="articleBox">
+      <!-- insert here -->
+    </div>
+    <div id="commentBox" class="col-10">
+      <h2>留言：</h2>
+      <ul id="commentList">
+        <li>无评论</li>
+      </ul>
+    </div>
+   
+      <div id="commentHere" class="col-10">
+
+      </div>
+  </div>
+</div>
+<script id="commentListTemp" type="text/template">
+  <% for(let i=0;i<(result.length>7?7:result.length);i++){%>
+    <li><span>#<%=i+1%>楼#</span><span><%=result[i].userId%>说:&nbsp;&nbsp;</span><span><%=result[i].comment%>&nbsp;&nbsp;</span><span class="text-success">评论于---<%=result[i].cmt_time%></span></li>
+  <%}%>
+</script>
+
+<script id="article" type="text/template">
+  <!-- <h3 class="col-12 ">最近的文章</h3> -->
+  <div class="col-12 mb-2 postContent ">
+    <h3 class="text-center text-secondary"><%=title%></h3>
+    <h5 ><span>分类:</span><span><%=1%></span></h5>
+    <div class="mt-2 text-success clearfix">
+      <span class="float-left">发表于：<%=pub_time%></span> <span class="float-right"><span>浏览(<%=view_num%>)</span><span>留言(<%=cmt_num%>)</span></span>
+    </div>
+    <div class=" text-secondary">
+      <%=content%>
+    </div>
+    
+  </div>
+</script>
+ 
+<script id="commentTmp" type="text/template">
+  <form action="" id="commentForm" class="col-12">
+      留言人:  <input type="text" name="viewer" rows="1" class="col-10" value="<%=viewer || ''%>"></input><br>
+      邮箱: <input name="email" id="" class="col-10" rows="1" value="<%=email || ''%>"></textarea> <br>
+      内容: <textarea name="comment" id="" class="col-10" rows="7"></textarea> <br>
+      <input type="button" value="发表" id="commentBtn">
+    </form>
+</script>
+</body>
+</html>

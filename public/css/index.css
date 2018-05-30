@@ -1,0 +1,6 @@
+.postContent {
+  max-height: 200px !important;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  /* white-space: nowrap; */
+}

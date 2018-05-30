@@ -5,22 +5,24 @@ const conn = require('../models/mysql.js')
 const checkLogin = require('../middlewares/check.js')
 // POST /signin 用户登录
 
-router.get('/', (req, res, next) => {
-  console.log(checkLogin(req, res).stateCode)
-  if (checkLogin(req, res).stateCode) {
-    console.log(checkLogin(req, res).stateCode)
-    console.log('已登录')
-    return res.json(
-      {err_code: 0, message: '已登录', isLogin: true}
-    )
-  } else {
-    console.log(checkLogin(req, res).stateCode)
-    console.log(req.session.author)
-    return res.json(
-      {err_code: 0, message: '未登录', isLogin: false}
-    )
-  }
-})
+// router.get('/', (req, res, next) => {
+//   console.log(checkLogin(req, res).stateCode)
+//   if (checkLogin(req, res).stateCode) {
+//     console.log(checkLogin(req, res).stateCode)
+//     console.log('已登录')
+//     return res.json(
+//       {err_code: 0, message: '已登录', isLogin: true}
+//     )
+//   } else {
+//     console.log(checkLogin(req, res).stateCode)
+//     console.log(req.session.author)
+//     return res.json(
+//       {err_code: 0, message: '未登录', isLogin: false}
+//     )
+//   }
+// })
+// router.use('/isNotLogin', checkLogin.isNotLogin)
+// router.use('/isLogin', checkLogin.isLogin)
 
 router.post('/', (req, res, next) => {
   let sqlStr = 'select password from author where author_name = ? '
