@@ -95,14 +95,14 @@ router.post('/', checkLogin.isNotLogin, (req, res, next) => {
 router.put('/:postId', (req, res, next) => {
   console.log('修改文章')
   return {
-    success:  1
+    success: 1
   }
 })
 
 router.delete('/:postId', (req, res, next) => {
   console.log('删除文章')
   return {
-    success:1
+    success: 1
   }
 })
 
